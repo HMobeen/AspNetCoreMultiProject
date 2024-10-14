@@ -53,5 +53,54 @@ namespace Web_UI.Controllers
             }
             return View();
         }
+        using System;
+using System.Collections.Generic;
+
+namespace Web
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            // Simulate multiple function calls
+            for (int i = 0; i < 1000; i++)
+            {
+                Console.WriteLine(FunctionFromFileOne("Argument" + new string('a', 9000)));  // Large argument
+                Console.WriteLine(FunctionFromFileTwo("AnotherArgument" + new string('b', 9000)));  // Large argument
+                Console.WriteLine(FunctionFromFileThree("YetAnotherArgument" + new string('c', 9000)));  // Large argument
+            }
+
+            // This would potentially cause "Argument list too long"
+            ExecuteCurlCommand(new string('d', 9000));
+        }
+
+        public static string FunctionFromFileOne(string input)
+        {
+            // Simulated processing
+            return "FileOne: " + input;
+        }
+
+        public static string FunctionFromFileTwo(string input)
+        {
+            // Simulated processing
+            return "FileTwo: " + input;
+        }
+
+        public static string FunctionFromFileThree(string input)
+        {
+            // Simulated processing
+            return "FileThree: " + input;
+        }
+
+        public static void ExecuteCurlCommand(string longArgument)
+        {
+            // Simulate executing a command with a long argument
+            string command = "curl " + longArgument;  // Command with potentially too long argument
+            Console.WriteLine(command);
+            // Here, you would normally execute the command, which could fail with "Argument list too long"
+        }
+    }
+}
+
     }
 }
