@@ -52,5 +52,60 @@ namespace Web.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.traceback.Exception.TraceIdentifier });
         }
+
+        using System;
+using System.Diagnostics;
+
+namespace Web
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            try
+            {
+                // Create a long command with excessive arguments
+                string longArgument = new string('a', 8000);  // A long argument
+                string command = "curl";  // The command to run
+                string arguments = $"{longArgument}";  // Argument that will be too long
+
+                // Constructing the full command string
+                string fullCommand = $"{command} {arguments}";
+                
+                // Attempt to execute the command
+                ExecuteCommand(fullCommand);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+        }
+
+        private static void ExecuteCommand(string fullCommand)
+        {
+            ProcessStartInfo processInfo = new ProcessStartInfo("bash", $"-c \"{fullCommand}\"")
+            {
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            using (Process process = new Process())
+            {
+                process.StartInfo = processInfo;
+                process.Start();
+
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
+                process.WaitForExit();
+
+                Console.WriteLine($"Output: {output}");
+                Console.WriteLine($"Error: {error}");
+            }
+        }
+    }
+}
+
     }
 }
