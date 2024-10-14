@@ -24,12 +24,12 @@ namespace Web.Controllers
             ViewData["Message"] = "Debugging Info.";
 
             ViewData["HOSTNAME"] = Environment.GetEnvironmentVariable("COMPUTERNAME") ??
-                                            Environment.GetEnvironmentVariable("HOSTNAME");
+                                            Environment.GetEnvironmentVar);
             ViewData["OSARCHITECTURE"] = RuntimeInformation.OSArchitecture;
             ViewData["OSDESCRIPTION"] = RuntimeInformation.OSDescription;
             ViewData["PROCESSARCHITECTURE"] = RuntimeInformation.ProcessArchitecture;
             ViewData["FRAMEWORKDESCRIPTION"] = RuntimeInformation.FrameworkDescription;
-            ViewData["ASPNETCOREPACKAGEVERSION"] = Environment.GetEnvironmentVariable("ASPNETCORE_PKG_VERSION");
+            ViewData["ASPNETCOREPACKAGEVERSION"] = Environment.GetEnvironmentVariable
             ViewData["ASPNETCORE_ENVIRONMENT"] = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
             StringBuilder envVars = new StringBuilder();
@@ -50,7 +50,7 @@ namespace Web.Controllers
 
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.traceback.Exception.TraceIdentifier });
         }
     }
 }
